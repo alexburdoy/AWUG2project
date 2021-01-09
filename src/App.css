@@ -41,3 +41,13 @@
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
 }
+
+.navbar-fontstyle{
+  font-family: 'Poppins', sans-serif !important; 
+  font-weight: 600;
+}
+
+.navbar-form{
+  font-family: 'Poppins', sans-serif !important; 
+  font-weight: 200;
+}

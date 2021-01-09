@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
- 
+
 function App() {
-  const llista ={
+  /*const llista ={
     title: 'Hola',
     desc: 'gora greta'
   };
@@ -25,6 +25,20 @@ function App() {
       <div className="cosPagina">
         <p>{llista.title}</p>
       </div>
+    </div>
+  );*/
+  return (
+    <div className="App">
+      <nav className="navbar navbar-dark bg-dark">
+        <a class="navbar-brand navbar-fontstyle" href="#">
+          <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy"></img>
+          Trending Movies
+        </a>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2 navbar-form" type="search" placeholder="Search a movie" aria-label="Search"></input>
+          <button class="btn btn-outline-info my-2 my-sm-0 navbar-form" type="submit">Search</button>
+        </form>
+      </nav>
     </div>
   );
 }
