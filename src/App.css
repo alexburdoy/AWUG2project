@@ -1,5 +1,7 @@
-.App {
-  text-align: center;
+.footerText{
+  text-align: center !important;
+  align-items: center;
+  display: block;
 }
 
 .App-logo {
@@ -40,6 +42,7 @@
 .cosPagina{
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
+  
 }
 
 .navbar-fontstyle{
@@ -50,4 +53,8 @@
 .navbar-form{
   font-family: 'Poppins', sans-serif !important; 
   font-weight: 200;
+}
+
+.title{
+  font-weight: 600;
 }
