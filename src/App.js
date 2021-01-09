@@ -1,7 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-
+ 
 function App() {
+  const llista ={
+    title: 'Hola',
+    desc: 'gora greta'
+  };
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +22,9 @@ function App() {
           Learn React
         </a>
       </header>
+      <div>
+        <p>{llista.title}</p>
+      </div>
     </div>
   );
 }
