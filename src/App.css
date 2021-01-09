@@ -8,6 +8,11 @@
   height: 40vmin;
   pointer-events: none;
 }
+.centerPagination{
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -57,4 +62,21 @@
 
 .title{
   font-weight: 600;
+}
+
+.bgCard{
+  background-color: #3c485c;
+  box-shadow: 4px 4px rgb(32, 51, 87);
+  transition: all 400ms ease-in-out;
+}
+.bgCard:hover{
+  box-shadow: 2px 2px 10px rgb(217, 229, 231);
+  cursor: pointer;
+}
+
+p{
+  color: white;
+}
+h5{
+  color: white;
 }

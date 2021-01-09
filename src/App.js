@@ -32,7 +32,7 @@ function App() {
   return (
     <div className="App">
       <nav className="navbar navbar-dark bg-dark">
-        <a class="navbar-brand navbar-fontstyle" href="#">
+        <a class="navbar-brand navbar-fontstyle" href="/.">
           <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy"></img>
           Trending Movies
         </a>
@@ -44,6 +44,18 @@ function App() {
       <div className="cosPagina">
         <MovieList></MovieList>
       </div>
+      <ul class="pagination centerPagination">
+          <li class="page-item">
+            <a class="page-link"  aria-label="Previous">
+              <span aria-hidden="true">«</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" aria-label="Next">
+              <span aria-hidden="true">»</span>
+            </a>
+          </li>
+        </ul>
       <footer className="footer mt-auto py-3 bg-dark">
         <div className="container">
           <span className="text-muted footerText">Àlex Burdoy, Josep Vílchez i Martí Peña</span>
@@ -90,7 +102,7 @@ class Movie extends React.Component {
     let info = this.props.movie;
     return (
       <div className="col mb-4">
-        <div className="card" id={info.id}>
+        <div className="card bgCard" id={info.id}>
           <img src={'https://image.tmdb.org/t/p/w500/${info.backdrop_path}'} className="card-img-top" alt={info.original_title}></img>
           <div className="card-body">
             <h5 className="card-title title">{info.original_title}</h5>
