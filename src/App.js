@@ -22,7 +22,7 @@ function App() {
           Learn React
         </a>
       </header>
-      <div>
+      <div className="cosPagina">
         <p>{llista.title}</p>
       </div>
     </div>
