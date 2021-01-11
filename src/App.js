@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-//aaaaaaaaaaaaaaaaaaaa
+//aaaaaaaaaaaaaaaaaaaaa
 function App() {
   /*const llista ={
     title: 'Hola',
