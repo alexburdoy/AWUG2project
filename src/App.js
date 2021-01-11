@@ -2,6 +2,13 @@ import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
 //aaaaaaaaaaaaaaaaaaaaa
 function App() {
   /*const llista ={
@@ -30,30 +37,50 @@ function App() {
     </div>
   );*/
   return (
+    <Router>
     <div className="App">
       <nav className="navbar navbar-dark bg-dark">
-        <a class="navbar-brand navbar-fontstyle" href="/.">
+        <Link to="/">
+        <a class="navbar-brand navbar-fontstyle">
           <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy"></img>
           Trending Movies
         </a>
+        </Link>
         <form class="form-inline">
           <input class="form-control mr-sm-2 navbar-form" type="search" placeholder="Search a movie" aria-label="Search"></input>
           <button class="btn btn-outline-info my-2 my-sm-0 navbar-form" type="submit">Search</button>
         </form>
       </nav>
       <div className="cosPagina">
-        <MovieList></MovieList>
+      <Switch>
+          <Route exact path="/">
+          <MovieList></MovieList>
+          </Route>
+          <Route path="/detailMovie">
+            <MovieDetail />
+          </Route>
+          <Route path="/movieSearch">
+            <MovieDetail />
+          </Route>
+          <Route path="/nextpageMovie">
+            <Next />
+          </Route>
+          <Route path="/previouspageMovie">
+            <Previous />
+          </Route>
+        </Switch>
+        
       </div>
       <ul class="pagination centerPagination">
-          <li class="page-item">
+          <li class="page-item"><Link to="/previouspageMovie">
             <a class="page-link"  aria-label="Previous">
               <span aria-hidden="true">«</span>
-            </a>
+            </a></Link>
           </li>
-          <li class="page-item">
+          <li class="page-item"><Link to="/nextpageMovie">
             <a class="page-link" aria-label="Next">
               <span aria-hidden="true">»</span>
-            </a>
+            </a></Link>
           </li>
         </ul>
       <footer className="footer mt-auto py-3 bg-dark">
@@ -62,6 +89,7 @@ function App() {
         </div>
       </footer>
     </div>
+    </Router>
   );
 }
 
@@ -115,6 +143,80 @@ class Movie extends React.Component {
     );
   }
 }
+
+class MovieDetail extends React.Component{
+  constructor(props){
+    super();
+  }
+
+  render(){
+    return(
+      <div>
+        <p>Hola</p>
+      </div>
+    );
+  }
+}
+
+class Next extends React.Component {
+  pagina=2;
+  constructor() {
+    super();
+    this.state = {
+      movies: []
+    }
+  }
+
+  componentDidMount() {
+    fetch("https://api.themoviedb.org/3/trending/movie/week?api_key=f37c16e288bd47f8c2026f6fdc704e57&page=1")
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          movies: json.results
+        });
+      });
+  }
+
+  render() {
+    return (
+      <div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.map((film, idx) =>
+        <Movie key={idx} movie={film}></Movie>
+      )}
+      </div>
+    );
+  }
+}
+
+class Previous extends React.Component {
+  pagina=2;
+  constructor() {
+    super();
+    this.state = {
+      movies: []
+    }
+  }
+
+  componentDidMount() {
+    fetch("https://api.themoviedb.org/3/trending/movie/week?api_key=f37c16e288bd47f8c2026f6fdc704e57&page=1")
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          movies: json.results
+        });
+      });
+  }
+
+  render() {
+    return (
+      <div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.map((film, idx) =>
+        <Movie key={idx} movie={film}></Movie>
+      )}
+      </div>
+    );
+  }
+}
+
+
 export default App;
 
 /*<div class="col mb-4">
