@@ -100,11 +100,11 @@ class Movie extends React.Component {
 
   render() {
     let info = this.props.movie;
-    
+    console.log('https://image.tmdb.org/t/p/w500'+info.backdrop_path);
     return (
       <div className="col mb-4">
         <div className="card bgCard" id={info.id}>
-          <img src={"https://image.tmdb.org/t/p/w500/${info.backdrop_path}"} className="card-img-top" alt={info.original_title}></img>
+          <img src={'https://image.tmdb.org/t/p/w500'+info.backdrop_path} className="card-img-top" alt={info.original_title}></img>
           <div className="card-body">
             <h5 className="card-title title">{info.original_title}</h5>
             <p className="card-text">{info.overview}</p>
