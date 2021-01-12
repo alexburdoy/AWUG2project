@@ -8,7 +8,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
-
+var pagina = 1;
 //aaaaaaaaaaaaaaaaaaaaa
 function App() {
   /*const llista ={
@@ -38,57 +38,34 @@ function App() {
   );*/
   return (
     <Router>
-    <div className="App">
-      <nav className="navbar navbar-dark bg-dark">
-        <Link to="/">
-        <a class="navbar-brand navbar-fontstyle">
-          <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy"></img>
+      <div className="App">
+        <nav className="navbar navbar-dark bg-dark">
+          <Link to="/">
+            <a class="navbar-brand navbar-fontstyle">
+              <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy"></img>
           Trending Movies
         </a>
-        </Link>
-        <form class="form-inline">
-          <input class="form-control mr-sm-2 navbar-form" type="search" placeholder="Search a movie" aria-label="Search"></input>
-          <button class="btn btn-outline-info my-2 my-sm-0 navbar-form" type="submit">Search</button>
-        </form>
-      </nav>
-      <div className="cosPagina">
-      <Switch>
-          <Route exact path="/">
-          <MovieList></MovieList>
-          </Route>
-          <Route path="/detailMovie">
-            <MovieDetail />
-          </Route>
-          <Route path="/movieSearch">
-            <MovieDetail />
-          </Route>
-          <Route path="/nextpageMovie">
-            <Next />
-          </Route>
-          <Route path="/previouspageMovie">
-            <Previous />
-          </Route>
-        </Switch>
-        
-      </div>
-      <ul class="pagination centerPagination">
-          <li class="page-item"><Link to="/previouspageMovie">
-            <a class="page-link"  aria-label="Previous">
-              <span aria-hidden="true">«</span>
-            </a></Link>
-          </li>
-          <li class="page-item"><Link to="/nextpageMovie">
-            <a class="page-link" aria-label="Next">
-              <span aria-hidden="true">»</span>
-            </a></Link>
-          </li>
-        </ul>
-      <footer className="footer mt-auto py-3 bg-dark">
-        <div className="container">
-          <span className="text-muted footerText">Àlex Burdoy, Josep Vílchez i Martí Peña</span>
+          </Link>
+          <form className="form-inline">
+            <input class="form-control mr-sm-2 navbar-form" type="search" placeholder="Search a movie" aria-label="Search"></input>
+            <button class="btn btn-outline-info my-2 my-sm-0 navbar-form" type="submit">Search</button>
+          </form>
+        </nav>
+        <div className="cosPagina">
+          <Switch>
+            <Route exact path="/">
+              <MovieList></MovieList>
+            </Route>
+            <Route path="/detailMovie">
+              <MovieDetail />
+            </Route>
+            <Route path="/movieSearch">
+              <MovieDetail />
+            </Route>
+          </Switch>
+
         </div>
-      </footer>
-    </div>
+      </div>
     </Router>
   );
 }
@@ -97,25 +74,84 @@ class MovieList extends React.Component {
   constructor() {
     super();
     this.state = {
-      movies: []
+      movies: [],
+      page: 1
     }
   }
 
   componentDidMount() {
-    fetch("https://api.themoviedb.org/3/trending/movie/week?api_key=f37c16e288bd47f8c2026f6fdc704e57&page=1")
+    this.makeHttpRequestWithPage(1);
+    /*fetch("https://api.themoviedb.org/3/trending/movie/week?api_key=f37c16e288bd47f8c2026f6fdc704e57&page=${pageNumber}")
       .then(response => response.json())
       .then(json => {
         this.setState({
-          movies: json.results
+          movies: json.results,
+          page: json.page
+        });
+      }); */
+  }
+
+  makeHttpRequestWithPage = async pageNumber => {
+    if(pageNumber<=1){
+      pageNumber=1;
+    }
+    fetch("https://api.themoviedb.org/3/trending/movie/week?api_key=f37c16e288bd47f8c2026f6fdc704e57&page=" + pageNumber)
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          movies: json.results,
+          page: json.page
         });
       });
   }
 
   render() {
+    let renderPageNumbers;
+    const pageNumbers = [];
+    if (this.state.total !== null) {
+      for (let i = 1; i <= 5; i++) {
+        pageNumbers.push(i);
+      }
+
+
+      renderPageNumbers = pageNumbers.map(number => {
+        let classes = this.state.page === number ? 'activePage' : 'pages';
+
+        return (
+          <li class="page-item">
+            <a className={classes} onClick={() => this.makeHttpRequestWithPage(number)}>
+              <span key={number}>{number}</span>
+            </a>
+          </li>
+        );
+      });
+    }
     return (
-      <div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.map((film, idx) =>
-        <Movie key={idx} movie={film}></Movie>
-      )}
+      <div>
+        <div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.map((film, idx) =>
+          <Movie key={idx} movie={film}></Movie>
+        )}
+        </div>
+        <ul class="pagination centerPagination">
+          <li class="page-item">
+            <a class="page-link" onClick={() => this.makeHttpRequestWithPage((this.state.page-1))} aria-label="Previous">
+              <span aria-hidden="true">«</span>
+            </a>
+          </li>
+
+          {renderPageNumbers}
+
+          <li class="page-item">
+            <a class="page-link" aria-label="Next">
+              <span onClick={() => this.makeHttpRequestWithPage((this.state.page+1))} aria-hidden="true">»</span>
+            </a>
+          </li>
+        </ul>
+        <footer className="footer mt-auto py-3 bg-dark">
+          <div className="container">
+            <span className="text-muted footerText">Àlex Burdoy, Josep Vílchez i Martí Peña</span>
+          </div>
+        </footer>
       </div>
     );
   }
@@ -128,11 +164,11 @@ class Movie extends React.Component {
 
   render() {
     let info = this.props.movie;
-    console.log('https://image.tmdb.org/t/p/w500'+info.backdrop_path);
+    console.log('https://image.tmdb.org/t/p/w500' + info.backdrop_path);
     return (
       <div className="col mb-4">
         <div className="card bgCard" id={info.id}>
-          <img src={'https://image.tmdb.org/t/p/w500'+info.backdrop_path} className="card-img-top" alt={info.original_title}></img>
+          <img src={'https://image.tmdb.org/t/p/w500' + info.backdrop_path} className="card-img-top" alt={info.original_title}></img>
           <div className="card-body">
             <h5 className="card-title title">{info.original_title}</h5>
             <p className="card-text">{info.overview}</p>
@@ -144,13 +180,13 @@ class Movie extends React.Component {
   }
 }
 
-class MovieDetail extends React.Component{
-  constructor(props){
+class MovieDetail extends React.Component {
+  constructor(props) {
     super();
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <div>
         <p>Hola</p>
       </div>
@@ -158,63 +194,6 @@ class MovieDetail extends React.Component{
   }
 }
 
-class Next extends React.Component {
-  pagina=2;
-  constructor() {
-    super();
-    this.state = {
-      movies: []
-    }
-  }
-
-  componentDidMount() {
-    fetch("https://api.themoviedb.org/3/trending/movie/week?api_key=f37c16e288bd47f8c2026f6fdc704e57&page=1")
-      .then(response => response.json())
-      .then(json => {
-        this.setState({
-          movies: json.results
-        });
-      });
-  }
-
-  render() {
-    return (
-      <div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.map((film, idx) =>
-        <Movie key={idx} movie={film}></Movie>
-      )}
-      </div>
-    );
-  }
-}
-
-class Previous extends React.Component {
-  pagina=2;
-  constructor() {
-    super();
-    this.state = {
-      movies: []
-    }
-  }
-
-  componentDidMount() {
-    fetch("https://api.themoviedb.org/3/trending/movie/week?api_key=f37c16e288bd47f8c2026f6fdc704e57&page=1")
-      .then(response => response.json())
-      .then(json => {
-        this.setState({
-          movies: json.results
-        });
-      });
-  }
-
-  render() {
-    return (
-      <div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.map((film, idx) =>
-        <Movie key={idx} movie={film}></Movie>
-      )}
-      </div>
-    );
-  }
-}
 
 
 export default App;
