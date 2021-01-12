@@ -50,8 +50,10 @@ class MovieList extends React.Component {
     super();
     this.state = {
       movies: [],
-      page: 1
+      page: 1,
+      filter:""
     }
+    this.filterMovie = this.filterMovie.bind(this);
   }
 
   componentDidMount() {
@@ -75,9 +77,16 @@ class MovieList extends React.Component {
       .then(json => {
         this.setState({
           movies: json.results,
-          page: json.page
+          page: json.page,
+          
         });
       });
+  }
+  filterMovie(){
+    var filterSearch = document.getElementById("movieSearch").value;
+    this.setState({
+      filter: filterSearch
+    });
   }
 
   render() {
@@ -101,7 +110,15 @@ class MovieList extends React.Component {
         );
       });
     }
-    
+    /*<div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.map((film, idx) =>
+            <Movie key={idx} movie={film}></Movie>
+          )}
+          </div>
+          onClick={this.filterMovie}
+          <div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.filter(movie=>movie.original_title.includes(this.state.filter|| movie.title.includes(this.state.filter))).map((film, idx) =>
+            <Movie key={idx} movie={film}></Movie>
+          )}
+          </div>*/
     return (
       <div>
         <nav className="navbar navbar-dark bg-dark">
@@ -112,12 +129,12 @@ class MovieList extends React.Component {
       </a>
 
           <form className="form-inline">
-            <input class="form-control mr-sm-2 navbar-form" type="search" placeholder="Search a movie" aria-label="Search"></input>
-            <button class="btn btn-outline-info my-2 my-sm-0 navbar-form" type="submit">Search</button>
+            <input class="form-control mr-sm-2 navbar-form" type="search" placeholder="Search a movie" aria-label="Search" id="movieSearch"></input>
+            <input class="btn btn-outline-info my-2 my-sm-0 navbar-form searchButton" type="button" value="Search"></input>
           </form>
         </nav>
         <div className="cosPagina">
-          <div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.map((film, idx) =>
+        <div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.map((film, idx) =>
             <Movie key={idx} movie={film}></Movie>
           )}
           </div>
@@ -131,8 +148,8 @@ class MovieList extends React.Component {
             {renderPageNumbers}
 
             <li class="page-item">
-              <a class="page-link" aria-label="Next">
-                <span onClick={() => this.makeHttpRequestWithPage((this.state.page + 1))} aria-hidden="true">»</span>
+              <a class="page-link" aria-label="Next" onClick={() => this.makeHttpRequestWithPage((this.state.page + 1))}>
+                <span  aria-hidden="true">»</span>
               </a>
             </li>
           </ul>

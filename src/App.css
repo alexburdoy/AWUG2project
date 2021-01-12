@@ -103,3 +103,6 @@ h5{
   border: 1px solid #dee2e6;
   cursor: pointer;
 }
+.searchButton{
+  width: 5em;
+}
