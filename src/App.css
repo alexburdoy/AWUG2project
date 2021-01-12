@@ -106,3 +106,6 @@ h5{
 .searchButton{
   width: 5em;
 }
+.cursor{
+  cursor: pointer;
+}

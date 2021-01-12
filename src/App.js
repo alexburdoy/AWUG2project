@@ -35,6 +35,39 @@ function App() {
         <p>{llista.title}</p>
       </div>
     </div>
+
+     <Router>
+      <div className="App">
+        <nav className="navbar navbar-dark bg-dark">
+          <Link to="/">
+            <a class="navbar-brand navbar-fontstyle">
+              <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy"></img>
+          Trending Movies
+        </a>
+          </Link>
+          <form className="form-inline">
+            <input class="form-control mr-sm-2 navbar-form" type="search" placeholder="Search a movie" aria-label="Search"></input>
+            <button class="btn btn-outline-info my-2 my-sm-0 navbar-form" type="submit">Search</button>
+          </form>
+        </nav>
+        <div className="cosPagina">
+          <Switch>
+            <Route exact path="/">
+              <MovieList></MovieList>
+            </Route>
+            <Route path="/detailMovie">
+              <MovieDetail />
+            </Route>
+            <Route path="/movieSearch">
+              <MovieDetail />
+            </Route>
+          </Switch>
+
+        </div>
+      </div>
+    </Router>
+    
+
   );*/
   return (
 
@@ -51,7 +84,7 @@ class MovieList extends React.Component {
     this.state = {
       movies: [],
       page: 1,
-      filter:""
+      filter: ""
     }
     this.filterMovie = this.filterMovie.bind(this);
   }
@@ -78,11 +111,11 @@ class MovieList extends React.Component {
         this.setState({
           movies: json.results,
           page: json.page,
-          
+
         });
       });
   }
-  filterMovie(){
+  filterMovie() {
     var filterSearch = document.getElementById("movieSearch").value;
     this.setState({
       filter: filterSearch
@@ -123,8 +156,8 @@ class MovieList extends React.Component {
       <div>
         <nav className="navbar navbar-dark bg-dark">
 
-          <a class="navbar-brand navbar-fontstyle" onClick={() => this.makeHttpRequestWithPage((1))}>
-            <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy"></img>
+          <a class="navbar-brand navbar-fontstyle cursor" onClick={() => this.makeHttpRequestWithPage((1))} >
+            <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy" ></img>
         Trending Movies
       </a>
 
@@ -134,13 +167,13 @@ class MovieList extends React.Component {
           </form>
         </nav>
         <div className="cosPagina">
-        <div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.map((film, idx) =>
+          <div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.map((film, idx) =>
             <Movie key={idx} movie={film}></Movie>
           )}
           </div>
           <ul class="pagination centerPagination">
             <li class="page-item">
-              <a class="page-link" onClick={() => this.makeHttpRequestWithPage((this.state.page - 1))} aria-label="Previous">
+              <a class="page-link pages" onClick={() => this.makeHttpRequestWithPage((this.state.page - 1))} aria-label="Previous">
                 <span aria-hidden="true">«</span>
               </a>
             </li>
@@ -148,8 +181,8 @@ class MovieList extends React.Component {
             {renderPageNumbers}
 
             <li class="page-item">
-              <a class="page-link" aria-label="Next" onClick={() => this.makeHttpRequestWithPage((this.state.page + 1))}>
-                <span  aria-hidden="true">»</span>
+              <a class="page-link pages" aria-label="Next" onClick={() => this.makeHttpRequestWithPage((this.state.page + 1))}>
+                <span aria-hidden="true">»</span>
               </a>
             </li>
           </ul>
@@ -175,6 +208,7 @@ class Movie extends React.Component {
     let info = this.props.movie;
     console.log('https://image.tmdb.org/t/p/w500' + info.backdrop_path);
     return (
+
       <div className="col mb-4">
         <div className="card bgCard" id={info.id}>
           <img src={'https://image.tmdb.org/t/p/w500' + info.backdrop_path} className="card-img-top" alt={info.original_title}></img>
@@ -184,7 +218,38 @@ class Movie extends React.Component {
             <p className="card-text"><small className="text-muted">{info.release_date}</small></p>
           </div>
         </div>
+
+        <MovieDetails movieID={info.id}></MovieDetails>
+
       </div>
+
+    );
+  }
+}
+
+class MovieDetails extends React.Component {
+  //https://api.themoviedb.org/3/movie/464052?api_key=f37c16e288bd47f8c2026f6fdc704e57
+  constructor(props) {
+    super();
+    this.state={
+      img: []
+    }
+  }
+  componentDidMount() {
+    fetch("https://api.themoviedb.org/3/movie/464052?api_key=f37c16e288bd47f8c2026f6fdc704e57")
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          img: json.backdrop_path,
+          
+
+        });
+      });
+  }
+
+  render() {
+    return (
+      <p>{this.props.movieID}</p>
     );
   }
 }
