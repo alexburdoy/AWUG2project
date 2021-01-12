@@ -13,7 +13,7 @@ var pagina = 1;
 function App() {
   /*const llista ={
     title: 'Hola',
-    desc: 'gora greta'
+    desc: 'hello'
   };
   return (
     <div className="App">
@@ -37,36 +37,11 @@ function App() {
     </div>
   );*/
   return (
-    <Router>
-      <div className="App">
-        <nav className="navbar navbar-dark bg-dark">
-          <Link to="/">
-            <a class="navbar-brand navbar-fontstyle">
-              <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy"></img>
-          Trending Movies
-        </a>
-          </Link>
-          <form className="form-inline">
-            <input class="form-control mr-sm-2 navbar-form" type="search" placeholder="Search a movie" aria-label="Search"></input>
-            <button class="btn btn-outline-info my-2 my-sm-0 navbar-form" type="submit">Search</button>
-          </form>
-        </nav>
-        <div className="cosPagina">
-          <Switch>
-            <Route exact path="/">
-              <MovieList></MovieList>
-            </Route>
-            <Route path="/detailMovie">
-              <MovieDetail />
-            </Route>
-            <Route path="/movieSearch">
-              <MovieDetail />
-            </Route>
-          </Switch>
 
-        </div>
-      </div>
-    </Router>
+    <div className="App">
+      <MovieList></MovieList>
+    </div>
+
   );
 }
 
@@ -92,8 +67,8 @@ class MovieList extends React.Component {
   }
 
   makeHttpRequestWithPage = async pageNumber => {
-    if(pageNumber<=1){
-      pageNumber=1;
+    if (pageNumber <= 1) {
+      pageNumber = 1;
     }
     fetch("https://api.themoviedb.org/3/trending/movie/week?api_key=f37c16e288bd47f8c2026f6fdc704e57&page=" + pageNumber)
       .then(response => response.json())
@@ -126,27 +101,44 @@ class MovieList extends React.Component {
         );
       });
     }
+    
     return (
       <div>
-        <div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.map((film, idx) =>
-          <Movie key={idx} movie={film}></Movie>
-        )}
+        <nav className="navbar navbar-dark bg-dark">
+
+          <a class="navbar-brand navbar-fontstyle" onClick={() => this.makeHttpRequestWithPage((1))}>
+            <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy"></img>
+        Trending Movies
+      </a>
+
+          <form className="form-inline">
+            <input class="form-control mr-sm-2 navbar-form" type="search" placeholder="Search a movie" aria-label="Search"></input>
+            <button class="btn btn-outline-info my-2 my-sm-0 navbar-form" type="submit">Search</button>
+          </form>
+        </nav>
+        <div className="cosPagina">
+          <div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.map((film, idx) =>
+            <Movie key={idx} movie={film}></Movie>
+          )}
+          </div>
+          <ul class="pagination centerPagination">
+            <li class="page-item">
+              <a class="page-link" onClick={() => this.makeHttpRequestWithPage((this.state.page - 1))} aria-label="Previous">
+                <span aria-hidden="true">«</span>
+              </a>
+            </li>
+
+            {renderPageNumbers}
+
+            <li class="page-item">
+              <a class="page-link" aria-label="Next">
+                <span onClick={() => this.makeHttpRequestWithPage((this.state.page + 1))} aria-hidden="true">»</span>
+              </a>
+            </li>
+          </ul>
+
         </div>
-        <ul class="pagination centerPagination">
-          <li class="page-item">
-            <a class="page-link" onClick={() => this.makeHttpRequestWithPage((this.state.page-1))} aria-label="Previous">
-              <span aria-hidden="true">«</span>
-            </a>
-          </li>
 
-          {renderPageNumbers}
-
-          <li class="page-item">
-            <a class="page-link" aria-label="Next">
-              <span onClick={() => this.makeHttpRequestWithPage((this.state.page+1))} aria-hidden="true">»</span>
-            </a>
-          </li>
-        </ul>
         <footer className="footer mt-auto py-3 bg-dark">
           <div className="container">
             <span className="text-muted footerText">Àlex Burdoy, Josep Vílchez i Martí Peña</span>
@@ -175,20 +167,6 @@ class Movie extends React.Component {
             <p className="card-text"><small className="text-muted">{info.release_date}</small></p>
           </div>
         </div>
-      </div>
-    );
-  }
-}
-
-class MovieDetail extends React.Component {
-  constructor(props) {
-    super();
-  }
-
-  render() {
-    return (
-      <div>
-        <p>Hola</p>
       </div>
     );
   }
