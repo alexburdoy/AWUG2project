@@ -203,6 +203,7 @@ class MovieDetails extends React.Component {
   componentDidMount() {
     let url = "https://api.themoviedb.org/3/movie/464052?api_key=f37c16e288bd47f8c2026f6fdc704e57";
     console.log(url);
+    console.log(this.state.idFilm);
     fetch(url)
       .then(response => response.json())
       .then(json => {
