@@ -8,71 +8,34 @@ import {
   Route,
   Link
 } from "react-router-dom";
-var pagina = 1;
-//aaaaaaaaaaaaaaaaaaaaa
-function App() {
-  /*const llista ={
-    title: 'Hola',
-    desc: 'hello'
-  };
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <div className="cosPagina">
-        <p>{llista.title}</p>
-      </div>
-    </div>
 
-     <Router>
-      <div className="App">
-        <nav className="navbar navbar-dark bg-dark">
-          <Link to="/">
-            <a class="navbar-brand navbar-fontstyle">
-              <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy"></img>
+function App() {
+ 
+  return (
+
+    <div className="App">
+      <Router>
+      <nav className="navbar navbar-dark bg-dark">
+        
+        <a class="navbar-brand navbar-fontstyle cursor" href="/">
+          <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy" ></img>
           Trending Movies
         </a>
+        
+
+        <form className="form-inline">
+          <input class="form-control mr-sm-2 navbar-form" type="search" placeholder="Search a movie" aria-label="Search" id="movieSearch"></input>
+          <Link to="/movieSearch">
+          <input class="btn btn-outline-info my-2 my-sm-0 navbar-form searchButton" type="button" value="Search"></input>
           </Link>
-          <form className="form-inline">
-            <input class="form-control mr-sm-2 navbar-form" type="search" placeholder="Search a movie" aria-label="Search"></input>
-            <button class="btn btn-outline-info my-2 my-sm-0 navbar-form" type="submit">Search</button>
-          </form>
-        </nav>
-        <div className="cosPagina">
-          <Switch>
-            <Route exact path="/">
-              <MovieList></MovieList>
-            </Route>
-            <Route path="/detailMovie">
-              <MovieDetail />
-            </Route>
-            <Route path="/movieSearch">
-              <MovieDetail />
-            </Route>
-          </Switch>
+        </form>
 
-        </div>
-      </div>
-    </Router>
-    
-
-  );*/
-  return (
-
-    <div className="App">
-      <MovieList></MovieList>
+      </nav>
+      
+      <Route exact path="/" component={MovieList} />
+      <Route exact path="/movieSearch" component={MovieSearch} />
+      <Route exact path="/movie/:movieID" component={MovieDetails}/>
+      </Router>
     </div>
 
   );
@@ -84,9 +47,9 @@ class MovieList extends React.Component {
     this.state = {
       movies: [],
       page: 1,
-      filter: ""
+      
     }
-    this.filterMovie = this.filterMovie.bind(this);
+    
   }
 
   componentDidMount() {
@@ -115,12 +78,7 @@ class MovieList extends React.Component {
         });
       });
   }
-  filterMovie() {
-    var filterSearch = document.getElementById("movieSearch").value;
-    this.setState({
-      filter: filterSearch
-    });
-  }
+  
 
   render() {
     let renderPageNumbers;
@@ -154,18 +112,7 @@ class MovieList extends React.Component {
           </div>*/
     return (
       <div>
-        <nav className="navbar navbar-dark bg-dark">
 
-          <a class="navbar-brand navbar-fontstyle cursor" onClick={() => this.makeHttpRequestWithPage((1))} >
-            <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy" ></img>
-        Trending Movies
-      </a>
-
-          <form className="form-inline">
-            <input class="form-control mr-sm-2 navbar-form" type="search" placeholder="Search a movie" aria-label="Search" id="movieSearch"></input>
-            <input class="btn btn-outline-info my-2 my-sm-0 navbar-form searchButton" type="button" value="Search"></input>
-          </form>
-        </nav>
         <div className="cosPagina">
           <div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.map((film, idx) =>
             <Movie key={idx} movie={film}></Movie>
@@ -210,6 +157,7 @@ class Movie extends React.Component {
     return (
 
       <div className="col mb-4">
+        <Link to={'/movie/${info.id}'}>
         <div className="card bgCard" id={info.id}>
           <img src={'https://image.tmdb.org/t/p/w500' + info.backdrop_path} className="card-img-top" alt={info.original_title}></img>
           <div className="card-body">
@@ -218,8 +166,9 @@ class Movie extends React.Component {
             <p className="card-text"><small className="text-muted">{info.release_date}</small></p>
           </div>
         </div>
+        </Link>
 
-        <MovieDetails movieID={info.id}></MovieDetails>
+        
 
       </div>
 
@@ -228,31 +177,75 @@ class Movie extends React.Component {
 }
 
 class MovieDetails extends React.Component {
-  //https://api.themoviedb.org/3/movie/464052?api_key=f37c16e288bd47f8c2026f6fdc704e57
-  constructor(props) {
+  //https://api.themoviedb.org/3/movie/${this.props.movieID}?api_key=f37c16e288bd47f8c2026f6fdc704e57
+  constructor({match,location}) {
     super();
-    this.state={
-      img: []
+    this.state = {
+      img: [],
+      idFilm : match.params.movieID,
+      title: []
+      
+
     }
+    console.log(JSON.stringify(match));
+    
   }
+  /*constructor() {
+    super();
+    this.state = {
+      img: [],
+      title: ""
+
+    }
+    
+  }*/
+  
   componentDidMount() {
-    fetch("https://api.themoviedb.org/3/movie/464052?api_key=f37c16e288bd47f8c2026f6fdc704e57")
+    let url = "https://api.themoviedb.org/3/movie/464052?api_key=f37c16e288bd47f8c2026f6fdc704e57";
+    console.log(url);
+    fetch(url)
       .then(response => response.json())
       .then(json => {
         this.setState({
           img: json.backdrop_path,
-          
+          title: json.original_title
+
 
         });
       });
+      
   }
 
   render() {
     return (
-      <p>{this.props.movieID}</p>
+      <div>
+      <p>Hola :) {this.state.title}</p>
+      <img src={'https://image.tmdb.org/t/p/w500' + this.state.img}></img>
+      </div>
     );
   }
 }
+
+class MovieSearch extends React.Component {
+  //https://api.themoviedb.org/3/movie/${this.props.movieID}?api_key=f37c16e288bd47f8c2026f6fdc704e57
+  constructor(props) {
+    super();
+    this.state = {
+      img: []
+    }
+  }
+  
+
+  render() {
+    return (
+      <div>
+      <p>Hola :)</p>
+    
+      </div>
+    );
+  }
+}
+
 
 
 
