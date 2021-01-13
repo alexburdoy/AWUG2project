@@ -10,31 +10,31 @@ import {
 } from "react-router-dom";
 
 function App() {
- 
+
   return (
 
     <div className="App">
       <Router>
-      <nav className="navbar navbar-dark bg-dark">
-        
-        <a class="navbar-brand navbar-fontstyle cursor" href="/">
-          <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy" ></img>
+        <nav className="navbar navbar-dark bg-dark">
+
+          <a class="navbar-brand navbar-fontstyle cursor" href="/">
+            <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy" ></img>
           Trending Movies
         </a>
-        
 
-        <form className="form-inline">
-          <input class="form-control mr-sm-2 navbar-form" type="search" placeholder="Search a movie" aria-label="Search" id="movieSearch"></input>
-          <Link to="/movieSearch">
-          <input class="btn btn-outline-info my-2 my-sm-0 navbar-form searchButton" type="button" value="Search"></input>
-          </Link>
-        </form>
 
-      </nav>
-      
-      <Route exact path="/" component={MovieList} />
-      <Route exact path="/movieSearch" component={MovieSearch} />
-      <Route exact path="/movie/:movieID" component={MovieDetails}/>
+          <form className="form-inline">
+            <input class="form-control mr-sm-2 navbar-form" type="search" placeholder="Search a movie" aria-label="Search" id="movieSearch"></input>
+            <Link to="/movieSearch">
+              <input class="btn btn-outline-info my-2 my-sm-0 navbar-form searchButton" type="button" value="Search"></input>
+            </Link>
+          </form>
+
+        </nav>
+
+        <Route exact path="/" component={MovieList} />
+        <Route exact path="/movieSearch" component={MovieSearch} />
+        <Route exact path="/movie/:movieID" component={MovieDetails} />
       </Router>
     </div>
 
@@ -47,9 +47,9 @@ class MovieList extends React.Component {
     this.state = {
       movies: [],
       page: 1,
-      
+
     }
-    
+
   }
 
   componentDidMount() {
@@ -78,7 +78,7 @@ class MovieList extends React.Component {
         });
       });
   }
-  
+
 
   render() {
     let renderPageNumbers;
@@ -158,17 +158,17 @@ class Movie extends React.Component {
 
       <div className="col mb-4">
         <Link to={'/movie/${info.id}'}>
-        <div className="card bgCard" id={info.id}>
-          <img src={'https://image.tmdb.org/t/p/w500' + info.backdrop_path} className="card-img-top" alt={info.original_title}></img>
-          <div className="card-body">
-            <h5 className="card-title title">{info.original_title}</h5>
-            <p className="card-text">{info.overview}</p>
-            <p className="card-text"><small className="text-muted">{info.release_date}</small></p>
+          <div className="card bgCard" id={info.id}>
+            <img src={'https://image.tmdb.org/t/p/w500' + info.backdrop_path} className="card-img-top" alt={info.original_title}></img>
+            <div className="card-body">
+              <h5 className="card-title title">{info.original_title}</h5>
+              <p className="card-text">{info.overview}</p>
+              <p className="card-text"><small className="text-muted">{info.release_date}</small></p>
+            </div>
           </div>
-        </div>
         </Link>
 
-        
+
 
       </div>
 
@@ -178,17 +178,17 @@ class Movie extends React.Component {
 
 class MovieDetails extends React.Component {
   //https://api.themoviedb.org/3/movie/${this.props.movieID}?api_key=f37c16e288bd47f8c2026f6fdc704e57
-  constructor({match,location}) {
+  constructor({ match, location }) {
     super();
     this.state = {
       img: [],
-      idFilm : match.params.movieID,
+      idFilm: match.params.movieID,
       title: []
-      
+
 
     }
     console.log(JSON.stringify(match));
-    
+
   }
   /*constructor() {
     super();
@@ -199,7 +199,7 @@ class MovieDetails extends React.Component {
     }
     
   }*/
-  
+
   componentDidMount() {
     let url = "https://api.themoviedb.org/3/movie/464052?api_key=f37c16e288bd47f8c2026f6fdc704e57";
     console.log(url);
@@ -213,14 +213,23 @@ class MovieDetails extends React.Component {
 
         });
       });
-      
+
   }
 
   render() {
     return (
       <div>
-      <p>Hola :) {this.state.title}</p>
-      <img src={'https://image.tmdb.org/t/p/w500' + this.state.img}></img>
+        
+
+        <div class="row featurette mt-5 px-3">
+          <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading textWhite">{this.state.title}</h2>
+            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+          </div>
+          <div class="col-md-5 order-md-1">
+            <img src={'https://image.tmdb.org/t/p/w500' + this.state.img} className="imgStyle"></img>
+          </div>
+        </div>
       </div>
     );
   }
@@ -234,13 +243,13 @@ class MovieSearch extends React.Component {
       img: []
     }
   }
-  
+
 
   render() {
     return (
       <div>
-      <p>Hola :)</p>
-    
+        <p>Hola :)</p>
+
       </div>
     );
   }
