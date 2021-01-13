@@ -154,10 +154,12 @@ class Movie extends React.Component {
   render() {
     let info = this.props.movie;
     console.log('https://image.tmdb.org/t/p/w500' + info.backdrop_path);
+    
+    
     return (
 
       <div className="col mb-4">
-        <Link to={'/movie/${info.id}'}>
+        <Link to={'/movie/'+info.id}>
           <div className="card bgCard" id={info.id}>
             <img src={'https://image.tmdb.org/t/p/w500' + info.backdrop_path} className="card-img-top" alt={info.original_title}></img>
             <div className="card-body">
@@ -201,7 +203,7 @@ class MovieDetails extends React.Component {
   }*/
 
   componentDidMount() {
-    let url = "https://api.themoviedb.org/3/movie/464052?api_key=f37c16e288bd47f8c2026f6fdc704e57";
+    let url = "https://api.themoviedb.org/3/movie/"+this.state.idFilm+"?api_key=f37c16e288bd47f8c2026f6fdc704e57";
     console.log(url);
     console.log(this.state.idFilm);
     fetch(url)
