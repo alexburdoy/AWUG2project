@@ -114,7 +114,7 @@ class MovieList extends React.Component {
       <div>
 
         <div className="cosPagina">
-          <div className="row row-cols-1 row-cols-md-3 p-3">{this.state.movies.map((film, idx) =>
+          <div className="row row-cols-1 row-cols-md-5 p-3">{this.state.movies.map((film, idx) =>
             <Movie key={idx} movie={film}></Movie>
           )}
           </div>
@@ -222,11 +222,11 @@ class MovieDetails extends React.Component {
         
 
         <div class="row featurette mt-5 px-3">
-          <div class="col-md-7 order-md-2">
+          <div class="col-md-8 order-md-2">
             <h2 class="featurette-heading textWhite">{this.state.title}</h2>
             <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
           </div>
-          <div class="col-md-5 order-md-1">
+          <div class="col-md-4 order-md-1">
             <img src={'https://image.tmdb.org/t/p/w500' + this.state.img} className="imgStyle"></img>
           </div>
         </div>
