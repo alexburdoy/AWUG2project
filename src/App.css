@@ -140,3 +140,10 @@ h5{
 .center{
   text-align: center;
 }
+
+.displayBlock{
+  display: block;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}

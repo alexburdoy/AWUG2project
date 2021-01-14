@@ -54,7 +54,14 @@ function App() {
         <Route exact path="/" component={MovieList} />
         <Route exact path="/movieSearch/:query" component={MovieSearch} />
         <Route exact path="/movie/:movieID" component={MovieDetails} />
+
+        
       </Router>
+      <footer className="footer mt-auto py-3 bg-dark displayBlock">
+          <div className="container">
+            <span className="text-muted footerText">Àlex Burdoy, Josep Vílchez i Martí Peña</span>
+          </div>
+        </footer>
     </div>
 
   );
@@ -156,11 +163,7 @@ class MovieList extends React.Component {
 
         </div>
 
-        <footer className="footer mt-auto py-3 bg-dark">
-          <div className="container">
-            <span className="text-muted footerText">Àlex Burdoy, Josep Vílchez i Martí Peña</span>
-          </div>
-        </footer>
+        
       </div>
     );
   }
