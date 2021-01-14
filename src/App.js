@@ -174,11 +174,7 @@ class Movie extends React.Component {
 
   render() {
     let info = this.props.movie;
-<<<<<<< HEAD
     //console.log('https://image.tmdb.org/t/p/w500' + info.backdrop_path);
-=======
-    console.log('https://image.tmdb.org/t/p/w500' + info.backdrop_path);
->>>>>>> ddc583fe723dd0526128dbfe0c5d35e689c7a848
 
 
     return (
@@ -210,12 +206,9 @@ class MovieDetails extends React.Component {
     this.state = {
       img: [],
       idFilm: match.params.movieID,
-      title: [],
-      genres: [],
-      overview: [],
-      homepage: [],
-      production_companies: [],
-      production_countries: []
+      title: []
+
+
     }
     console.log(JSON.stringify(match));
 
@@ -239,12 +232,9 @@ class MovieDetails extends React.Component {
       .then(json => {
         this.setState({
           img: json.backdrop_path,
-          title: json.original_title,
-          genres: json.genres,
-          overview: json.overview,
-          homepage: json.homepage,
-          production_companies: json.production_companies,
-          production_countries: json.production_countries
+          title: json.original_title
+
+
         });
       });
 
@@ -252,106 +242,21 @@ class MovieDetails extends React.Component {
 
   render() {
     return (
-<<<<<<< HEAD
       <div>
-=======
-      <div className="cosPagina">
->>>>>>> ddc583fe723dd0526128dbfe0c5d35e689c7a848
 
 
         <div class="row featurette mt-5 px-3">
-          <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading textWhite title">{this.state.title}</h2>
-            <p class="lead">{this.state.overview}</p>
-            <br></br><br></br><br></br>
-            <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-              <p>Genres: {this.state.genres.map((genre, idx) =>
-                <Genre key={idx} genreName={genre}></Genre>
-              )}
-              </p>
-              <a type="button" href={this.state.homepage} class="btn btn-outline-secondary">Movie Homepage</a>
-            </div>
+          <div class="col-md-8 order-md-2">
+            <h2 class="featurette-heading textWhite">{this.state.title}</h2>
+            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
           </div>
-          <div class="col-md-5 order-md-1">
+          <div class="col-md-4 order-md-1">
             <img src={'https://image.tmdb.org/t/p/w500' + this.state.img} className="imgStyle"></img>
           </div>
         </div>
-        <br></br>
-        <hr class="featurette-divider hrStyle"></hr>
-        <h4 class="ml-5 pl-5 featurette-heading textWhite title">Production Companies</h4>
-        <div class="row m-2 justify-content-center">
-          
-          {this.state.production_companies.map((company, idx) => <ProductionCompanies key={idx} companyInfo={company}></ProductionCompanies>)}
-
-        </div>
-        <hr class="featurette-divider hrStyle"></hr>
-        <h4 class="ml-5 pl-5 featurette-heading textWhite title">Production Coutries</h4>
-        <div class="m-2">
-          
-          {this.state.production_countries.map((country, idx) => <ProductionCountries key={idx} countryName={country}></ProductionCountries>)}
-
-        </div>
       </div>
     );
   }
-}
-
-class Genre extends React.Component {
-  constructor(props) {
-    super();
-  }
-
-  render() {
-    let info = this.props.genreName;
-
-
-
-    return (
-
-      <em>|{info.name}| </em>
-
-    );
-  }
-
-}
-
-class ProductionCompanies extends React.Component {
-  constructor(props) {
-    super();
-  }
-
-  render() {
-    let info = this.props.companyInfo;
-
-
-
-    return (
-      <div class="col-lg-3 bgProdCard m-1 p-3">
-        <img class="bd-placeholder-img" src={'https://image.tmdb.org/t/p/w500' + info.logo_path} width="100"></img>
-        <h5 class="pt-3">{info.name}</h5>
-        <p><strong>Country: </strong>{info.origin_country}</p>
-        
-      </div>
-    );
-  }
-
-}
-
-class ProductionCountries extends React.Component {
-  constructor(props) {
-    super();
-  }
-
-  render() {
-    let info = this.props.countryName;
-
-
-
-    return (
-      <p class="center"><em>|{info.name}| </em></p>
-    );
-  }
-
 }
 
 class MovieSearch extends React.Component {
