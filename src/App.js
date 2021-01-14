@@ -37,7 +37,7 @@ function App() {
 
           <a class="navbar-brand navbar-fontstyle cursor" href="/">
             <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy" ></img>
-          Trending Movies
+          PelisToGuapas SA
         </a>
 
           <form className="form-inline" onSubmit={searchMovies}>
