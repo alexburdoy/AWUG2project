@@ -36,8 +36,8 @@ function App() {
         <nav className="navbar navbar-dark bg-dark">
 
           <a class="navbar-brand navbar-fontstyle cursor" href="/">
-            <img src={logo} height="30" className="d-inline-block align-top" alt="" loading="lazy" ></img>
-          PelisToGuapas SA
+            <img src={logo} height="60" className="d-inline-block align-top" alt="" loading="lazy" ></img>
+          
         </a>
 
           <form className="form-inline" onSubmit={searchMovies}>
@@ -183,9 +183,10 @@ class Movie extends React.Component {
     return (
 
       <div className="col mb-4">
+      
         <Link to={'/movie/' + info.id}>
           <div className="card bgCard" id={info.id}>
-            <img src={'https://image.tmdb.org/t/p/w500' + info.backdrop_path} className="card-img-top" alt={info.original_title}></img>
+          <img src={'https://image.tmdb.org/t/p/w500' + info.backdrop_path} className="card-img-top" alt={info.original_title}></img>
             <div className="card-body">
               <h5 className="card-title title">{info.original_title}</h5>
               <p className="card-text">{info.overview}</p>
@@ -251,10 +252,15 @@ class MovieDetails extends React.Component {
 
   render() {
     return (
+      
       <div className="cosPagina">
+        <div class="row featurette mt-2 px-3">
+          <div class="col-md-7 order-md-2">
+            <input  class="btn btn-info my-4 my-sm-2 navbar-form" href="/" type="button" value="Back"></input>
+          </div>
+        </div>
 
-
-        <div class="row featurette mt-5 px-3">
+        <div class="row featurette mt-2 px-3">
           <div class="col-md-7 order-md-2">
             <h2 class="featurette-heading textWhite title">{this.state.title}</h2>
             <p class="lead">{this.state.overview}</p>
@@ -264,10 +270,10 @@ class MovieDetails extends React.Component {
                 <Genre key={idx} genreName={genre}></Genre>
               )}
               </p>
-              <a type="button" href={this.state.homepage} class="btn btn-outline-secondary">Movie Homepage</a>
+              <a type="button" href={this.state.homepage} class="btn btn-outline-info">Movie Homepage</a>
             </div>
           </div>
-          <div class="col-md-5 order-md-1">
+          <div class="col-md-5 order-md-2">
             <img src={'https://image.tmdb.org/t/p/w500' + this.state.img} className="imgStyle"></img>
           </div>
         </div>
