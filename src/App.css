@@ -147,3 +147,11 @@ h5{
   width: 100%;
   bottom: 0;
 }
+.results{
+  
+  text-align: start;
+}
+.vertCenter{
+  margin: auto;
+  width: 60%;
+}

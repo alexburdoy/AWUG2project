@@ -37,15 +37,15 @@ function App() {
 
           <a class="navbar-brand navbar-fontstyle cursor" href="/">
             <img src={logo} height="60" className="d-inline-block align-top" alt="" loading="lazy" ></img>
-          
-        </a>
+
+          </a>
 
           <form className="form-inline" onSubmit={searchMovies}>
 
             <input class="form-control mr-sm-2 navbar-form" type="search" aria-label="Search" id="movieSearch" name="query" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search a movie"></input>
-            <Link to={'/movieSearch/' + query}>
-            <input class="btn btn-outline-info my-2 my-sm-0 navbar-form searchButton" type="button" value="Search"></input>
-            </Link>
+            
+              <a class="btn btn-outline-info my-2 my-sm-0 navbar-form searchButton" type="button" value="Search" href={'/movieSearch/' + query}>Search</a>
+            
 
           </form>
 
@@ -55,13 +55,13 @@ function App() {
         <Route exact path="/movieSearch/:query" component={MovieSearch} />
         <Route exact path="/movie/:movieID" component={MovieDetails} />
 
-        
+
       </Router>
       <footer className="footer mt-auto py-3 bg-dark displayBlock">
-          <div className="container">
-            <span className="text-muted footerText">Àlex Burdoy, Josep Vílchez i Martí Peña</span>
-          </div>
-        </footer>
+        <div className="container">
+          <span className="text-muted footerText">Àlex Burdoy, Josep Vílchez i Martí Peña</span>
+        </div>
+      </footer>
     </div>
 
   );
@@ -163,7 +163,7 @@ class MovieList extends React.Component {
 
         </div>
 
-        
+
       </div>
     );
   }
@@ -183,10 +183,10 @@ class Movie extends React.Component {
     return (
 
       <div className="col mb-4">
-      
+
         <Link to={'/movie/' + info.id}>
           <div className="card bgCard" id={info.id}>
-          <img src={'https://image.tmdb.org/t/p/w500' + info.backdrop_path} className="card-img-top" alt={info.original_title}></img>
+            <img src={'https://image.tmdb.org/t/p/w500' + info.backdrop_path} className="card-img-top" alt={info.original_title}></img>
             <div className="card-body">
               <h5 className="card-title title">{info.original_title}</h5>
               <p className="card-text">{info.overview}</p>
@@ -252,11 +252,15 @@ class MovieDetails extends React.Component {
 
   render() {
     return (
-      
+
       <div className="cosPagina">
         <div class="row featurette mt-2 px-3">
           <div class="col-md-7 order-md-2">
-            <input  class="btn btn-info my-4 my-sm-2 navbar-form" href="/" type="button" value="Back"></input>
+            <a class="btn btn-danger my-4 my-sm-2 navbar-form" href="/" type="button" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+              </svg>
+                 Back</a>
           </div>
         </div>
 
@@ -281,14 +285,14 @@ class MovieDetails extends React.Component {
         <hr class="featurette-divider hrStyle"></hr>
         <h4 class="ml-5 pl-5 featurette-heading textWhite title">Production Companies</h4>
         <div class="row m-2 justify-content-center">
-          
+
           {this.state.production_companies.map((company, idx) => <ProductionCompanies key={idx} companyInfo={company}></ProductionCompanies>)}
 
         </div>
         <hr class="featurette-divider hrStyle"></hr>
         <h4 class="ml-5 pl-5 featurette-heading textWhite title">Production Coutries</h4>
         <div class="m-2">
-          
+
           {this.state.production_countries.map((country, idx) => <ProductionCountries key={idx} countryName={country}></ProductionCountries>)}
 
         </div>
@@ -331,7 +335,7 @@ class ProductionCompanies extends React.Component {
         <img class="bd-placeholder-img" src={'https://image.tmdb.org/t/p/w500' + info.logo_path} width="100"></img>
         <h5 class="pt-3">{info.name}</h5>
         <p><strong>Country: </strong>{info.origin_country}</p>
-        
+
       </div>
     );
   }
@@ -364,7 +368,7 @@ class MovieSearch extends React.Component {
       page: 1,
 
     }
-    
+
   }
 
   componentDidMount() {
@@ -392,10 +396,10 @@ class MovieSearch extends React.Component {
 
         });
       });
-      
+
   }
   render() {
-    
+
     let renderPageNumbers;
     const pageNumbers = [];
     if (this.state.total !== null) {
@@ -428,6 +432,18 @@ class MovieSearch extends React.Component {
       <div>
 
         <div className="cosPagina">
+          <div class="row featurette mt-2 px-3">
+            <div class="col-md-2 order-md-1">
+              <a class="btn btn-danger my-4 my-sm-2 navbar-form" href="/" type="button" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                </svg>
+                 Back</a>
+            </div>
+            <div class="col-md-10 order-md-2 vertCenter">
+              <h5 class="results">Results for: {this.props.match.params.query}</h5>
+            </div>
+          </div>
           <div className="row row-cols-1 row-cols-md-5 p-3">{this.state.movies.map((film, idx) =>
             <Movie key={idx} movie={film}></Movie>
           )}
