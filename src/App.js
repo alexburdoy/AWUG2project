@@ -160,6 +160,7 @@ class MovieList extends React.Component {
               </a>
             </li>
           </ul>
+          <br></br><br></br><br></br>
 
         </div>
 
