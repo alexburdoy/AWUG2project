@@ -467,11 +467,6 @@ class MovieSearch extends React.Component {
 
         </div>
 
-        <footer className="footer mt-auto py-3 bg-dark">
-          <div className="container">
-            <span className="text-muted footerText">Àlex Burdoy, Josep Vílchez i Martí Peña</span>
-          </div>
-        </footer>
       </div>
     );
   }
